@@ -15,5 +15,13 @@ func main() {
 		return
 	}
 
-	net.StartServer(cfg.Daemon.Port.String(), logger)
+	net.StartServer(
+		cfg.Daemon,
+		//cfg.Daemon.Port.String(),
+		//"https://api.finnflare.com:48054",
+		//cfg.Daemon.AccessToken,
+		//cfg.Daemon.RedirectToken,
+		//cfg.Daemon.WorkersPullSize,
+		logger,
+	)
 }

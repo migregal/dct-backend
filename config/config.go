@@ -3,17 +3,19 @@ package config
 import (
 	"encoding/json"
 	"errors"
-	"finnflare.com/favourites/validator"
+	"finnflare.com/dct_backend/validator"
 	"fmt"
 	"github.com/ilyakaznacheev/cleanenv"
 	"path/filepath"
 )
 
 type Daemon struct {
-	LogPath        string      `json:"log_path" yaml:"log_path" env:"LOG_PATH" env-default:"." env-description:"Log files storing path"`
-	Port           json.Number `json:"port,int" yaml:"port" env:"PORT" env-description:"Daemon port"`
-	Token          string      `json:"token" yaml:"token" env:"TOKEN" env-description:"Daemon access token"`
-	WorkersPulSize int         `json:"workers_pul_size" yaml:"workers_pul_size" env:"WORKERS_PUL_SIZE" env-default:"16" env-description:"Max number of workers"`
+	LogPath         string      `json:"log_path" yaml:"log_path" env:"LOG_PATH" env-default:"." env-description:"Log files storing path"`
+	Port            json.Number `json:"port,int" yaml:"port" env:"PORT" env-description:"Daemon port"`
+	AccessToken     string      `json:"access_token" yaml:"access_token" env:"ACCESS_TOKEN" env-description:"Daemon access token"`
+	RedirectUrl     string      `json:"redirect" yaml:"redirect" env:"REDIRECT" env-description:"Daemon redirect url"`
+	RedirectToken   string      `json:"token" yaml:"token" env:"TOKEN" env-description:"Redirect access token"`
+	WorkersPullSize int         `json:"workers_pul_size" yaml:"workers_pul_size" env:"WORKERS_PUL_SIZE" env-default:"16" env-description:"Max number of workers"`
 }
 
 type Config struct {
@@ -40,7 +42,7 @@ func (d Daemon) checkDaemonConfig() bool {
 		return false
 	}
 
-	if d.WorkersPulSize <= 0 {
+	if d.WorkersPullSize <= 0 {
 		return false
 	}
 
