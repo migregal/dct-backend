@@ -1,5 +1,7 @@
 package net
 
+import "github.com/valyala/fasthttp"
+
 const (
 	wrongJSONFormat = "Wrong JSON format"
 )
@@ -58,16 +60,9 @@ func (h *Handler) processRequest(request []byte) []byte {
 
 	switch req.Header.Method {
 	case login:
-		body, err := h.login(reqStr)
-
-		if err != nil {
-			h.Log.Error(err)
-			response.ResponseBody = h.msgErrorResponse(err.Error())
-		} else {
-			response.ResponseBody = body
-		}
+		fallthrough
 	case tasks:
-		body, err := h.getTasks(reqStr)
+		body, err := h.redirectRequest(reqStr)
 
 		if err != nil {
 			h.Log.Error(err)
@@ -84,4 +79,27 @@ func (h *Handler) processRequest(request []byte) []byte {
 
 	str, _ := response.MarshalJSON()
 	return str
+}
+
+func (h *Handler) redirectRequest(reqStr []byte) (*ResponseBody, error) {
+	nreq := fasthttp.AcquireRequest()
+	nreq.SetRequestURI(h.Url)
+	nreq.Header.Add("Authorization", h.Auth)
+	nreq.Header.SetMethodBytes(POST)
+	nreq.Header.SetContentType("application/json")
+	nreq.SetBody(reqStr)
+
+	nres := fasthttp.AcquireResponse()
+	if err := fasthttp.Do(nreq, nres); err != nil {
+		return nil, err
+	}
+	fasthttp.ReleaseRequest(nreq)
+
+	data := &Response{}
+	if err := data.UnmarshalJSON(nres.Body()); err != nil {
+		return nil, err
+	}
+	fasthttp.ReleaseResponse(nres)
+
+	return data.ResponseBody, nil
 }
