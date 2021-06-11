@@ -12,6 +12,7 @@ import (
 
 const (
 	login = "TSDExchange.login"
+	tasks = "TSDExchange.get.tasklist"
 )
 
 var (

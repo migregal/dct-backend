@@ -66,6 +66,15 @@ func (h *Handler) processRequest(request []byte) []byte {
 		} else {
 			response.ResponseBody = body
 		}
+	case tasks:
+		body, err := h.getTasks(reqStr)
+
+		if err != nil {
+			h.Log.Error(err)
+			response.ResponseBody = h.msgErrorResponse(err.Error())
+		} else {
+			response.ResponseBody = body
+		}
 	default:
 		h.Log.Error(req.Header.Method + " " + incorrectMethod)
 		response.ResponseBody = h.msgErrorResponse(wrongJSONFormat)

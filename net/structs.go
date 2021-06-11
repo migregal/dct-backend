@@ -14,8 +14,10 @@ type RequestHeader struct {
 //easyjson:json
 type Body struct {
 	Barcode *string `json:"barcode,omitempty"`
-	//User   *database.User    `json:"user"`
-	//Offers *[]database.Offer `json:"offers,omitempty"`
+	User    *struct {
+		Guid *string `json:"guid,omitempty"`
+	} `json:"user,omitempty"`
+	OperationCode *string `json:"operationcode,omitempty"`
 }
 
 //easyjson:json
@@ -30,7 +32,7 @@ type Request struct {
 
 //easyjson:json
 type Data struct {
-	User struct {
+	User *struct {
 		Name string `json:"name"`
 		Guid string `json:"guid"`
 	} `json:"user,omitempty"`
@@ -38,6 +40,10 @@ type Data struct {
 		OperationCode string `json:"operationcode"`
 		OperationName string `json:"operationname"`
 	} `json:"operationlist,omitempty"`
+	Tasklist []struct {
+		Taskname string `json:"taskname"`
+		Taskguid string `json:"taskguid"`
+	} `json:"tasklist,omitempty"`
 }
 
 //easyjson:json
