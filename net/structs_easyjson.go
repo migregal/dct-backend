@@ -610,6 +610,21 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 				}
 				in.Delim(']')
 			}
+		case "task":
+			if in.IsNull() {
+				in.Skip()
+				out.Task = nil
+			} else {
+				if out.Task == nil {
+					out.Task = new(struct {
+						Taskname string `json:"taskname"`
+						Taskguid string `json:"taskguid"`
+						Totalqty string `json:"totalqty"`
+						Execqty  string `json:"execqty"`
+					})
+				}
+				easyjson6a975c40Decode2(in, out.Task)
+			}
 		case "tasklist":
 			if in.IsNull() {
 				in.Skip()
@@ -636,8 +651,52 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 						Taskname string `json:"taskname"`
 						Taskguid string `json:"taskguid"`
 					}
-					easyjson6a975c40Decode2(in, &v2)
+					easyjson6a975c40Decode3(in, &v2)
 					out.Tasklist = append(out.Tasklist, v2)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		case "caselist":
+			if in.IsNull() {
+				in.Skip()
+				out.Caselist = nil
+			} else {
+				in.Delim('[')
+				if out.Caselist == nil {
+					if !in.IsDelim(']') {
+						out.Caselist = make([]struct {
+							Caseid    string `json:"caseid"`
+							Casename  string `json:"casename"`
+							Locid     string `json:"locid"`
+							Loc       string `json:"loc"`
+							Qty       int    `json:"qty"`
+							Deviation bool   `json:"deviation"`
+						}, 0, 0)
+					} else {
+						out.Caselist = []struct {
+							Caseid    string `json:"caseid"`
+							Casename  string `json:"casename"`
+							Locid     string `json:"locid"`
+							Loc       string `json:"loc"`
+							Qty       int    `json:"qty"`
+							Deviation bool   `json:"deviation"`
+						}{}
+					}
+				} else {
+					out.Caselist = (out.Caselist)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v3 struct {
+						Caseid    string `json:"caseid"`
+						Casename  string `json:"casename"`
+						Locid     string `json:"locid"`
+						Loc       string `json:"loc"`
+						Qty       int    `json:"qty"`
+						Deviation bool   `json:"deviation"`
+					}
+					easyjson6a975c40Decode4(in, &v3)
+					out.Caselist = append(out.Caselist, v3)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -672,14 +731,24 @@ func easyjson6a975c40EncodeFinnflareComDctBackendNet6(out *jwriter.Writer, in Da
 		}
 		{
 			out.RawByte('[')
-			for v3, v4 := range in.OperationList {
-				if v3 > 0 {
+			for v4, v5 := range in.OperationList {
+				if v4 > 0 {
 					out.RawByte(',')
 				}
-				easyjson6a975c40Encode1(out, v4)
+				easyjson6a975c40Encode1(out, v5)
 			}
 			out.RawByte(']')
 		}
+	}
+	if in.Task != nil {
+		const prefix string = ",\"task\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		easyjson6a975c40Encode2(out, *in.Task)
 	}
 	if len(in.Tasklist) != 0 {
 		const prefix string = ",\"tasklist\":"
@@ -691,11 +760,30 @@ func easyjson6a975c40EncodeFinnflareComDctBackendNet6(out *jwriter.Writer, in Da
 		}
 		{
 			out.RawByte('[')
-			for v5, v6 := range in.Tasklist {
-				if v5 > 0 {
+			for v6, v7 := range in.Tasklist {
+				if v6 > 0 {
 					out.RawByte(',')
 				}
-				easyjson6a975c40Encode2(out, v6)
+				easyjson6a975c40Encode3(out, v7)
+			}
+			out.RawByte(']')
+		}
+	}
+	if len(in.Caselist) != 0 {
+		const prefix string = ",\"caselist\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		{
+			out.RawByte('[')
+			for v8, v9 := range in.Caselist {
+				if v8 > 0 {
+					out.RawByte(',')
+				}
+				easyjson6a975c40Encode4(out, v9)
 			}
 			out.RawByte(']')
 		}
@@ -726,7 +814,98 @@ func (v *Data) UnmarshalJSON(data []byte) error {
 func (v *Data) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjson6a975c40DecodeFinnflareComDctBackendNet6(l, v)
 }
-func easyjson6a975c40Decode2(in *jlexer.Lexer, out *struct {
+func easyjson6a975c40Decode4(in *jlexer.Lexer, out *struct {
+	Caseid    string `json:"caseid"`
+	Casename  string `json:"casename"`
+	Locid     string `json:"locid"`
+	Loc       string `json:"loc"`
+	Qty       int    `json:"qty"`
+	Deviation bool   `json:"deviation"`
+}) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "caseid":
+			out.Caseid = string(in.String())
+		case "casename":
+			out.Casename = string(in.String())
+		case "locid":
+			out.Locid = string(in.String())
+		case "loc":
+			out.Loc = string(in.String())
+		case "qty":
+			out.Qty = int(in.Int())
+		case "deviation":
+			out.Deviation = bool(in.Bool())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjson6a975c40Encode4(out *jwriter.Writer, in struct {
+	Caseid    string `json:"caseid"`
+	Casename  string `json:"casename"`
+	Locid     string `json:"locid"`
+	Loc       string `json:"loc"`
+	Qty       int    `json:"qty"`
+	Deviation bool   `json:"deviation"`
+}) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"caseid\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.Caseid))
+	}
+	{
+		const prefix string = ",\"casename\":"
+		out.RawString(prefix)
+		out.String(string(in.Casename))
+	}
+	{
+		const prefix string = ",\"locid\":"
+		out.RawString(prefix)
+		out.String(string(in.Locid))
+	}
+	{
+		const prefix string = ",\"loc\":"
+		out.RawString(prefix)
+		out.String(string(in.Loc))
+	}
+	{
+		const prefix string = ",\"qty\":"
+		out.RawString(prefix)
+		out.Int(int(in.Qty))
+	}
+	{
+		const prefix string = ",\"deviation\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.Deviation))
+	}
+	out.RawByte('}')
+}
+func easyjson6a975c40Decode3(in *jlexer.Lexer, out *struct {
 	Taskname string `json:"taskname"`
 	Taskguid string `json:"taskguid"`
 }) {
@@ -762,7 +941,7 @@ func easyjson6a975c40Decode2(in *jlexer.Lexer, out *struct {
 		in.Consumed()
 	}
 }
-func easyjson6a975c40Encode2(out *jwriter.Writer, in struct {
+func easyjson6a975c40Encode3(out *jwriter.Writer, in struct {
 	Taskname string `json:"taskname"`
 	Taskguid string `json:"taskguid"`
 }) {
@@ -778,6 +957,79 @@ func easyjson6a975c40Encode2(out *jwriter.Writer, in struct {
 		const prefix string = ",\"taskguid\":"
 		out.RawString(prefix)
 		out.String(string(in.Taskguid))
+	}
+	out.RawByte('}')
+}
+func easyjson6a975c40Decode2(in *jlexer.Lexer, out *struct {
+	Taskname string `json:"taskname"`
+	Taskguid string `json:"taskguid"`
+	Totalqty string `json:"totalqty"`
+	Execqty  string `json:"execqty"`
+}) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "taskname":
+			out.Taskname = string(in.String())
+		case "taskguid":
+			out.Taskguid = string(in.String())
+		case "totalqty":
+			out.Totalqty = string(in.String())
+		case "execqty":
+			out.Execqty = string(in.String())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjson6a975c40Encode2(out *jwriter.Writer, in struct {
+	Taskname string `json:"taskname"`
+	Taskguid string `json:"taskguid"`
+	Totalqty string `json:"totalqty"`
+	Execqty  string `json:"execqty"`
+}) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"taskname\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.Taskname))
+	}
+	{
+		const prefix string = ",\"taskguid\":"
+		out.RawString(prefix)
+		out.String(string(in.Taskguid))
+	}
+	{
+		const prefix string = ",\"totalqty\":"
+		out.RawString(prefix)
+		out.String(string(in.Totalqty))
+	}
+	{
+		const prefix string = ",\"execqty\":"
+		out.RawString(prefix)
+		out.String(string(in.Execqty))
 	}
 	out.RawByte('}')
 }
@@ -930,7 +1182,7 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet7(in *jlexer.Lexer, out *Bod
 						Guid *string `json:"guid,omitempty"`
 					})
 				}
-				easyjson6a975c40Decode3(in, out.User)
+				easyjson6a975c40Decode5(in, out.User)
 			}
 		case "operationcode":
 			if in.IsNull() {
@@ -941,6 +1193,18 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet7(in *jlexer.Lexer, out *Bod
 					out.OperationCode = new(string)
 				}
 				*out.OperationCode = string(in.String())
+			}
+		case "task":
+			if in.IsNull() {
+				in.Skip()
+				out.Task = nil
+			} else {
+				if out.Task == nil {
+					out.Task = new(struct {
+						Taskguid string `json:"taskguid"`
+					})
+				}
+				easyjson6a975c40Decode6(in, out.Task)
 			}
 		default:
 			in.SkipRecursive()
@@ -970,7 +1234,7 @@ func easyjson6a975c40EncodeFinnflareComDctBackendNet7(out *jwriter.Writer, in Bo
 		} else {
 			out.RawString(prefix)
 		}
-		easyjson6a975c40Encode3(out, *in.User)
+		easyjson6a975c40Encode5(out, *in.User)
 	}
 	if in.OperationCode != nil {
 		const prefix string = ",\"operationcode\":"
@@ -981,6 +1245,16 @@ func easyjson6a975c40EncodeFinnflareComDctBackendNet7(out *jwriter.Writer, in Bo
 			out.RawString(prefix)
 		}
 		out.String(string(*in.OperationCode))
+	}
+	if in.Task != nil {
+		const prefix string = ",\"task\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		easyjson6a975c40Encode6(out, *in.Task)
 	}
 	out.RawByte('}')
 }
@@ -1008,7 +1282,53 @@ func (v *Body) UnmarshalJSON(data []byte) error {
 func (v *Body) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjson6a975c40DecodeFinnflareComDctBackendNet7(l, v)
 }
-func easyjson6a975c40Decode3(in *jlexer.Lexer, out *struct {
+func easyjson6a975c40Decode6(in *jlexer.Lexer, out *struct {
+	Taskguid string `json:"taskguid"`
+}) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "taskguid":
+			out.Taskguid = string(in.String())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjson6a975c40Encode6(out *jwriter.Writer, in struct {
+	Taskguid string `json:"taskguid"`
+}) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"taskguid\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.Taskguid))
+	}
+	out.RawByte('}')
+}
+func easyjson6a975c40Decode5(in *jlexer.Lexer, out *struct {
 	Guid *string `json:"guid,omitempty"`
 }) {
 	isTopLevel := in.IsStart()
@@ -1049,7 +1369,7 @@ func easyjson6a975c40Decode3(in *jlexer.Lexer, out *struct {
 		in.Consumed()
 	}
 }
-func easyjson6a975c40Encode3(out *jwriter.Writer, in struct {
+func easyjson6a975c40Encode5(out *jwriter.Writer, in struct {
 	Guid *string `json:"guid,omitempty"`
 }) {
 	out.RawByte('{')

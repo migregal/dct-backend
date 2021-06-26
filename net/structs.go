@@ -18,6 +18,9 @@ type Body struct {
 		Guid *string `json:"guid,omitempty"`
 	} `json:"user,omitempty"`
 	OperationCode *string `json:"operationcode,omitempty"`
+	Task          *struct {
+		Taskguid string `json:"taskguid"`
+	} `json:"task,omitempty"`
 }
 
 //easyjson:json
@@ -40,10 +43,24 @@ type Data struct {
 		OperationCode string `json:"operationcode"`
 		OperationName string `json:"operationname"`
 	} `json:"operationlist,omitempty"`
+	Task *struct {
+		Taskname string `json:"taskname"`
+		Taskguid string `json:"taskguid"`
+		Totalqty string `json:"totalqty"`
+		Execqty  string `json:"execqty"`
+	} `json:"task,omitempty"`
 	Tasklist []struct {
 		Taskname string `json:"taskname"`
 		Taskguid string `json:"taskguid"`
 	} `json:"tasklist,omitempty"`
+	Caselist []struct {
+		Caseid    string `json:"caseid"`
+		Casename  string `json:"casename"`
+		Locid     string `json:"locid"`
+		Loc       string `json:"loc"`
+		Qty       int    `json:"qty"`
+		Deviation bool   `json:"deviation"`
+	} `json:"caselist,omitempty"`
 }
 
 //easyjson:json
