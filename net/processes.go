@@ -61,6 +61,8 @@ func (h *Handler) processRequest(request []byte) []byte {
 	switch req.Header.Method {
 	case login:
 		fallthrough
+	case operations:
+		fallthrough
 	case tasks:
 		fallthrough
 	case cases:

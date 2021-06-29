@@ -578,34 +578,34 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 				}
 				easyjson6a975c40Decode(in, out.User)
 			}
-		case "operationlist":
+		case "operations":
 			if in.IsNull() {
 				in.Skip()
-				out.OperationList = nil
+				out.Operations = nil
 			} else {
 				in.Delim('[')
-				if out.OperationList == nil {
+				if out.Operations == nil {
 					if !in.IsDelim(']') {
-						out.OperationList = make([]struct {
-							OperationCode string `json:"operationcode"`
-							OperationName string `json:"operationname"`
+						out.Operations = make([]struct {
+							OperationCode string `json:"code"`
+							OperationName string `json:"name"`
 						}, 0, 2)
 					} else {
-						out.OperationList = []struct {
-							OperationCode string `json:"operationcode"`
-							OperationName string `json:"operationname"`
+						out.Operations = []struct {
+							OperationCode string `json:"code"`
+							OperationName string `json:"name"`
 						}{}
 					}
 				} else {
-					out.OperationList = (out.OperationList)[:0]
+					out.Operations = (out.Operations)[:0]
 				}
 				for !in.IsDelim(']') {
 					var v1 struct {
-						OperationCode string `json:"operationcode"`
-						OperationName string `json:"operationname"`
+						OperationCode string `json:"code"`
+						OperationName string `json:"name"`
 					}
 					easyjson6a975c40Decode1(in, &v1)
-					out.OperationList = append(out.OperationList, v1)
+					out.Operations = append(out.Operations, v1)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -721,8 +721,8 @@ func easyjson6a975c40EncodeFinnflareComDctBackendNet6(out *jwriter.Writer, in Da
 		out.RawString(prefix[1:])
 		easyjson6a975c40Encode(out, *in.User)
 	}
-	if len(in.OperationList) != 0 {
-		const prefix string = ",\"operationlist\":"
+	if len(in.Operations) != 0 {
+		const prefix string = ",\"operations\":"
 		if first {
 			first = false
 			out.RawString(prefix[1:])
@@ -731,7 +731,7 @@ func easyjson6a975c40EncodeFinnflareComDctBackendNet6(out *jwriter.Writer, in Da
 		}
 		{
 			out.RawByte('[')
-			for v4, v5 := range in.OperationList {
+			for v4, v5 := range in.Operations {
 				if v4 > 0 {
 					out.RawByte(',')
 				}
@@ -1034,8 +1034,8 @@ func easyjson6a975c40Encode2(out *jwriter.Writer, in struct {
 	out.RawByte('}')
 }
 func easyjson6a975c40Decode1(in *jlexer.Lexer, out *struct {
-	OperationCode string `json:"operationcode"`
-	OperationName string `json:"operationname"`
+	OperationCode string `json:"code"`
+	OperationName string `json:"name"`
 }) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
@@ -1055,9 +1055,9 @@ func easyjson6a975c40Decode1(in *jlexer.Lexer, out *struct {
 			continue
 		}
 		switch key {
-		case "operationcode":
+		case "code":
 			out.OperationCode = string(in.String())
-		case "operationname":
+		case "name":
 			out.OperationName = string(in.String())
 		default:
 			in.SkipRecursive()
@@ -1070,19 +1070,19 @@ func easyjson6a975c40Decode1(in *jlexer.Lexer, out *struct {
 	}
 }
 func easyjson6a975c40Encode1(out *jwriter.Writer, in struct {
-	OperationCode string `json:"operationcode"`
-	OperationName string `json:"operationname"`
+	OperationCode string `json:"code"`
+	OperationName string `json:"name"`
 }) {
 	out.RawByte('{')
 	first := true
 	_ = first
 	{
-		const prefix string = ",\"operationcode\":"
+		const prefix string = ",\"code\":"
 		out.RawString(prefix[1:])
 		out.String(string(in.OperationCode))
 	}
 	{
-		const prefix string = ",\"operationname\":"
+		const prefix string = ",\"name\":"
 		out.RawString(prefix)
 		out.String(string(in.OperationName))
 	}

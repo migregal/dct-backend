@@ -39,10 +39,10 @@ type Data struct {
 		Name string `json:"name"`
 		Guid string `json:"guid"`
 	} `json:"user,omitempty"`
-	OperationList []struct {
-		OperationCode string `json:"operationcode"`
-		OperationName string `json:"operationname"`
-	} `json:"operationlist,omitempty"`
+	Operations []struct {
+		OperationCode string `json:"code"`
+		OperationName string `json:"name"`
+	} `json:"operations,omitempty"`
 	Task *struct {
 		Taskname string `json:"taskname"`
 		Taskguid string `json:"taskguid"`
