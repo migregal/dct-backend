@@ -13,6 +13,7 @@ import (
 const (
 	login = "TSDExchange.login"
 	tasks = "TSDExchange.get.tasklist"
+	cases = "TSDExchange.get.caselist"
 )
 
 var (
