@@ -66,6 +66,8 @@ func (h *Handler) processRequest(request []byte) []byte {
 	case tasks:
 		fallthrough
 	case cases:
+		fallthrough
+	case addCase:
 		body, err := h.redirectRequest(reqStr)
 
 		if err != nil {

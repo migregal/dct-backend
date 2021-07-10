@@ -15,6 +15,7 @@ const (
 	operations = "TSDExchange.get.operations"
 	tasks      = "TSDExchange.get.tasklist"
 	cases      = "TSDExchange.get.caselist"
+	addCase    = "TSDExchange.set.newcase"
 )
 
 var (

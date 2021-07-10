@@ -21,6 +21,12 @@ type Body struct {
 	Task          *struct {
 		Taskguid string `json:"taskguid"`
 	} `json:"task,omitempty"`
+	Case *struct {
+		Caseid string `json:"caseid"`
+	} `json:"case,omitempty"`
+	Previouscase *struct {
+		Previouscaseid string `json:"previouscaseid"`
+	} `json:"previouscase,omitempty"`
 }
 
 //easyjson:json
@@ -61,6 +67,10 @@ type Data struct {
 		Qty       int    `json:"qty"`
 		Deviation bool   `json:"deviation"`
 	} `json:"caselist,omitempty"`
+	Case *struct {
+		Casename string `json:"casename"`
+		Caseid   string `json:"caseid"`
+	} `json:"case,omitempty"`
 }
 
 //easyjson:json
