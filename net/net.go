@@ -11,11 +11,12 @@ import (
 )
 
 const (
-	login      = "TSDExchange.login"
-	operations = "TSDExchange.get.operations"
-	tasks      = "TSDExchange.get.tasklist"
-	cases      = "TSDExchange.get.caselist"
-	addCase    = "TSDExchange.set.newcase"
+	login        = "TSDExchange.login"
+	operations   = "TSDExchange.get.operations"
+	tasks        = "TSDExchange.get.tasklist"
+	cases        = "TSDExchange.get.caselist"
+	addCase      = "TSDExchange.set.newcase"
+	caseNotFound = "TSDExchange.set.casenotfound"
 )
 
 var (
