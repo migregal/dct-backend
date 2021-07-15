@@ -70,6 +70,14 @@ func (h *Handler) processRequest(request []byte) []byte {
 	case addCase:
 		fallthrough
 	case caseNotFound:
+		fallthrough
+	case taskStopped:
+		fallthrough
+	case skuCaseList:
+		fallthrough
+	case skuCaseMove:
+		fallthrough
+	case skuCaseNotfound:
 		body, err := h.redirectRequest(reqStr)
 
 		if err != nil {
