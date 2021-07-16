@@ -34,13 +34,13 @@ type Handler struct {
 	JobQueue      chan struct{}
 }
 
-func NewHandler(maxWorkers int, url string, accessToken string, redirectToken string) *Handler {
+func NewHandler(maxWorkers int, url string, accessToken string, redirectToken string, login string, pwd string) *Handler {
 	pool := make(chan struct{}, maxWorkers)
 	return &Handler{
 		Url:           url,
 		AccessToken:   accessToken,
 		RedirectToken: redirectToken,
-		Auth:          "Basic " + basicAuth("WMS", ""),
+		Auth:          "Basic " + basicAuth(login, pwd),
 		JobQueue:      pool,
 	}
 }
@@ -83,16 +83,18 @@ type Server struct {
 	srv fasthttp.Server
 }
 
-func NewServer(cfg config.Daemon, logger *logrus.Logger) Server {
+func NewServer(cfg config.Config, logger *logrus.Logger) Server {
 	if filesHandler == nil {
 		filesHandler = fasthttp.FSHandler("./static", 0)
 	}
 
 	rootHandler := NewHandler(
-		cfg.WorkersPullSize,
-		cfg.RedirectUrl,
-		cfg.AccessToken,
-		cfg.RedirectToken,
+		cfg.Daemon.WorkersPullSize,
+		cfg.Daemon.RedirectUrl,
+		cfg.Daemon.AccessToken,
+		cfg.Daemon.RedirectToken,
+		cfg.Auth.Login,
+		cfg.Auth.Password,
 	)
 	rootHandler.Log = logger
 

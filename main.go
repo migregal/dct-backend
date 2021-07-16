@@ -33,7 +33,7 @@ func (p *program) run() {
 		return
 	}
 
-	p.server = net.NewServer(cfg.Daemon, logger)
+	p.server = net.NewServer(*cfg, logger)
 	p.logger = logger
 	p.server.Start(
 		cfg.Daemon,
@@ -65,11 +65,6 @@ func Manage(s service.Service) (string, error) {
 			return string(status), err
 		case "usage":
 			return usage, nil
-		default:
-			if err := s.Run(); err != nil {
-				panic(err)
-			}
-			return "finished", nil
 		}
 	}
 

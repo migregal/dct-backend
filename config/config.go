@@ -20,6 +20,10 @@ type Daemon struct {
 
 type Config struct {
 	Daemon Daemon `json:"daemon" yml:"daemon"`
+	Auth   struct {
+		Login    string `json:"login" yml:"login"`
+		Password string `json:"pwd" yml:"pwd"`
+	} `json:"auth" yml:"auth"`
 }
 
 func (cfg *Config) loadConfig(fileName string) error {
