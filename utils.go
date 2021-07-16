@@ -24,10 +24,6 @@ func setUp() (*config.Config, *logrus.Logger, error) {
 		return nil, nil, nil
 	}
 
-	if *confFile == "" {
-		*confFile = "config.json"
-	}
-
 	var cfg config.Config
 	if err := cfg.GetConfig(exPath+string(os.PathSeparator)+*confFile, true); err != nil {
 		return nil, nil, err
@@ -51,7 +47,7 @@ func setUp() (*config.Config, *logrus.Logger, error) {
 func parseFlags() (*bool, *bool, *string) {
 	help := flag.Bool("h", false, "Display config description")
 	verbose := flag.Bool("v", false, "Display config result")
-	confFile := flag.String("config", "", "Config file name")
+	confFile := flag.String("config", "config.json", "Config file name")
 	flag.Parse()
 
 	return help, verbose, confFile
