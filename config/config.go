@@ -24,6 +24,7 @@ type Config struct {
 		Login    string `json:"login" yml:"login"`
 		Password string `json:"pwd" yml:"pwd"`
 	} `json:"auth" yml:"auth"`
+	CurPass string `json:"-" yml:"-"`
 }
 
 func (cfg *Config) loadConfig(fileName string) error {
@@ -70,10 +71,6 @@ func (cfg *Config) GetConfig(fileName string, env bool) error {
 
 	if !cfg.Daemon.checkDaemonConfig() {
 		return errors.New("incorrect daemon configuration")
-	}
-
-	if !cfg.Daemon.checkDaemonConfig() {
-		return errors.New("incorrect database configuration")
 	}
 
 	return nil

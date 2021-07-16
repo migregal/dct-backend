@@ -1,16 +1,25 @@
 package main
 
 import (
+	"finnflare.com/dct_backend/config"
 	"finnflare.com/dct_backend/net"
 	"fmt"
 	"github.com/kardianos/service"
 	"github.com/sirupsen/logrus"
 	"os"
+	"strconv"
 )
 
 const usage = "Usage: dct_backend install | remove | start | stop | status"
 const serviceName = "FFDCT service, version 1.0.0"
 const serviceDescription = "Finn Flare DCT service"
+
+type Conf struct {
+	conf   *config.Config
+	logger *logrus.Logger
+}
+
+var conf = Conf{}
 
 type program struct {
 	server net.Server
@@ -23,21 +32,26 @@ func (p *program) Start(s service.Service) error {
 }
 
 func (p *program) run() {
-	cfg, logger, err := setUp()
+	if conf.conf == nil {
+		cfg, logger, err := setUp()
 
-	if err != nil {
-		panic(err)
+		if err != nil {
+			panic(err)
+		}
+
+		if cfg == nil || logger == nil {
+			panic("")
+		}
+
+		conf.conf = cfg
+		conf.logger = logger
 	}
 
-	if cfg == nil || logger == nil {
-		return
-	}
-
-	p.server = net.NewServer(*cfg, logger)
-	p.logger = logger
+	p.server = net.NewServer(*conf.conf, conf.logger)
+	p.logger = conf.logger
 	p.server.Start(
-		cfg.Daemon,
-		logger,
+		conf.conf.Daemon,
+		conf.logger,
 	)
 }
 
@@ -62,13 +76,29 @@ func Manage(s service.Service) (string, error) {
 			return "restart", s.Restart()
 		case "status":
 			status, err := s.Status()
-			return string(status), err
+			return strconv.Itoa(int(status)), err
 		case "usage":
 			return usage, nil
 		}
 	}
 
-	if err := s.Run(); err != nil {
+	if service.Interactive() {
+		cfg, logger, err := setUp()
+
+		if err != nil {
+			panic(err)
+		}
+
+		if cfg == nil || logger == nil {
+			return "", nil
+		}
+
+		conf.conf = cfg
+		conf.logger = logger
+	}
+
+	err := s.Run()
+	if err != nil {
 		panic(err)
 	}
 	return "finished", nil
@@ -89,8 +119,10 @@ func main() {
 
 	status, err := Manage(s)
 	if err != nil {
-		fmt.Println("\n", status, "\nError: ", err)
+		fmt.Println(status, "\nError: ", err)
 		os.Exit(1)
 	}
-	fmt.Println(status)
+	if status != "" {
+		fmt.Println(status)
+	}
 }

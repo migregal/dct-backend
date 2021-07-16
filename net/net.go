@@ -5,6 +5,7 @@ import (
 	"finnflare.com/dct_backend/config"
 	"github.com/sirupsen/logrus"
 	"github.com/valyala/fasthttp"
+	"os"
 	"time"
 )
 
@@ -85,7 +86,7 @@ type Server struct {
 
 func NewServer(cfg config.Config, logger *logrus.Logger) Server {
 	if filesHandler == nil {
-		filesHandler = fasthttp.FSHandler("./static", 0)
+		filesHandler = fasthttp.FSHandler(cfg.CurPass+string(os.PathSeparator)+"static", 0)
 	}
 
 	rootHandler := NewHandler(

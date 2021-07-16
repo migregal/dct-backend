@@ -6,9 +6,17 @@ import (
 	"flag"
 	"fmt"
 	"github.com/sirupsen/logrus"
+	"os"
+	"path/filepath"
 )
 
 func setUp() (*config.Config, *logrus.Logger, error) {
+	ex, err := os.Executable()
+	if err != nil {
+		panic(err)
+	}
+	exPath := filepath.Dir(ex)
+
 	help, verbose, confFile := parseFlags()
 
 	if *help {
@@ -21,9 +29,11 @@ func setUp() (*config.Config, *logrus.Logger, error) {
 	}
 
 	var cfg config.Config
-	if err := cfg.GetConfig(*confFile, true); err != nil {
+	if err := cfg.GetConfig(exPath+string(os.PathSeparator)+*confFile, true); err != nil {
 		return nil, nil, err
 	}
+	cfg.CurPass = exPath
+	cfg.Daemon.LogPath = cfg.CurPass + string(os.PathSeparator) + cfg.Daemon.LogPath
 
 	log, err := logger.ConfigureLogger(cfg.Daemon.LogPath)
 
