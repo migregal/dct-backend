@@ -5,8 +5,6 @@ import (
 	"finnflare.com/dct_backend/config"
 	"github.com/sirupsen/logrus"
 	"github.com/valyala/fasthttp"
-	"os"
-	"os/signal"
 	"time"
 )
 
@@ -81,7 +79,11 @@ func requestHandler(ctx *fasthttp.RequestCtx) {
 	filesHandler(ctx)
 }
 
-func StartServer(cfg config.Daemon, logger *logrus.Logger) {
+type Server struct {
+	srv fasthttp.Server
+}
+
+func NewServer(cfg config.Daemon, logger *logrus.Logger) Server {
 	if filesHandler == nil {
 		filesHandler = fasthttp.FSHandler("./static", 0)
 	}
@@ -94,23 +96,25 @@ func StartServer(cfg config.Daemon, logger *logrus.Logger) {
 	)
 	rootHandler.Log = logger
 
-	server := fasthttp.Server{
-		Logger:      logger,
-		Handler:     rootHandler.ServeHTTP,
-		ReadTimeout: 10 * time.Second,
+	return Server{
+		fasthttp.Server{
+			Logger:      logger,
+			Handler:     rootHandler.ServeHTTP,
+			ReadTimeout: 10 * time.Second,
+		},
 	}
+}
 
+func (srv *Server) Start(cfg config.Daemon, logger *logrus.Logger) {
 	go func() {
-		if err := server.ListenAndServe(":" + cfg.Port.String()); err != nil {
+		if err := srv.srv.ListenAndServe(":" + cfg.Port.String()); err != nil {
 			logger.Error(err)
 		}
 	}()
+}
 
-	stop := make(chan os.Signal, 1)
-	signal.Notify(stop, os.Interrupt)
-	<-stop
-
-	if err := server.Shutdown(); err != nil {
+func (srv *Server) Stop(logger *logrus.Logger) {
+	if err := srv.srv.Shutdown(); err != nil {
 		logger.Error(err)
 	}
 }

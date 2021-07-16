@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"finnflare.com/dct_backend/config"
 	"finnflare.com/dct_backend/logger"
 	"flag"
@@ -18,8 +17,7 @@ func setUp() (*config.Config, *logrus.Logger, error) {
 	}
 
 	if *confFile == "" {
-		flag.PrintDefaults()
-		return nil, nil, errors.New("missing configuration file name")
+		*confFile = "config.json"
 	}
 
 	var cfg config.Config
