@@ -10,7 +10,7 @@ import (
 	"strconv"
 )
 
-const usage = "Usage: dct_backend install | remove | start | stop | status"
+const usage = "Usage: dct_backend install | remove | start | stop | restart | status"
 const serviceName = "FFDCT service, version 1.0.0"
 const serviceDescription = "Finn Flare DCT service"
 
