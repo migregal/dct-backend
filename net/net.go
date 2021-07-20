@@ -3,6 +3,7 @@ package net
 import (
 	"encoding/base64"
 	"finnflare.com/dct_backend/config"
+	"github.com/AdhityaRamadhanus/fasthttpcors"
 	"github.com/sirupsen/logrus"
 	"github.com/valyala/fasthttp"
 	"os"
@@ -99,10 +100,15 @@ func NewServer(cfg config.Config, logger *logrus.Logger) Server {
 	)
 	rootHandler.Log = logger
 
+	withCors := fasthttpcors.NewCorsHandler(fasthttpcors.Options{
+		AllowedMethods:   []string{"GET", "POST"}, // only allow get or post to resource
+		AllowCredentials: false,                   // resource doesn't support credentials
+		AllowMaxAge:      5600,                    // cache the preflight result
+	})
 	return Server{
 		fasthttp.Server{
 			Logger:      logger,
-			Handler:     rootHandler.ServeHTTP,
+			Handler:     withCors.CorsMiddleware(rootHandler.ServeHTTP),
 			ReadTimeout: 10 * time.Second,
 		},
 	}

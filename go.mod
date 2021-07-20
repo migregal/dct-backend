@@ -3,6 +3,7 @@ module finnflare.com/dct_backend
 go 1.16
 
 require (
+	github.com/AdhityaRamadhanus/fasthttpcors v0.0.0-20170121111917-d4c07198763a
 	github.com/ilyakaznacheev/cleanenv v1.2.5
 	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/kardianos/service v1.2.0
