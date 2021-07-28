@@ -87,6 +87,7 @@ type Data struct {
 	Skucaselist []struct {
 		Skubarcode string `json:"skubarcode,omitempty"`
 		Skuname    string `json:"skuname,omitempty"`
+		Skuguid    string `json:"skuguid,omitempty"`
 		RequiredKM bool   `json:"requiredKM,omitempty"`
 		Qty        int    `json:"qty,omitempty"`
 		Deviation  bool   `json:"deviation,omitempty"`

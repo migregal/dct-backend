@@ -728,14 +728,16 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 						out.Skucaselist = make([]struct {
 							Skubarcode string `json:"skubarcode,omitempty"`
 							Skuname    string `json:"skuname,omitempty"`
+							Skuguid    string `json:"skuguid,omitempty"`
 							RequiredKM bool   `json:"requiredKM,omitempty"`
 							Qty        int    `json:"qty,omitempty"`
 							Deviation  bool   `json:"deviation,omitempty"`
-						}, 0, 1)
+						}, 0, 0)
 					} else {
 						out.Skucaselist = []struct {
 							Skubarcode string `json:"skubarcode,omitempty"`
 							Skuname    string `json:"skuname,omitempty"`
+							Skuguid    string `json:"skuguid,omitempty"`
 							RequiredKM bool   `json:"requiredKM,omitempty"`
 							Qty        int    `json:"qty,omitempty"`
 							Deviation  bool   `json:"deviation,omitempty"`
@@ -748,6 +750,7 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 					var v4 struct {
 						Skubarcode string `json:"skubarcode,omitempty"`
 						Skuname    string `json:"skuname,omitempty"`
+						Skuguid    string `json:"skuguid,omitempty"`
 						RequiredKM bool   `json:"requiredKM,omitempty"`
 						Qty        int    `json:"qty,omitempty"`
 						Deviation  bool   `json:"deviation,omitempty"`
@@ -903,6 +906,7 @@ func (v *Data) UnmarshalEasyJSON(l *jlexer.Lexer) {
 func easyjson6a975c40Decode6(in *jlexer.Lexer, out *struct {
 	Skubarcode string `json:"skubarcode,omitempty"`
 	Skuname    string `json:"skuname,omitempty"`
+	Skuguid    string `json:"skuguid,omitempty"`
 	RequiredKM bool   `json:"requiredKM,omitempty"`
 	Qty        int    `json:"qty,omitempty"`
 	Deviation  bool   `json:"deviation,omitempty"`
@@ -929,6 +933,8 @@ func easyjson6a975c40Decode6(in *jlexer.Lexer, out *struct {
 			out.Skubarcode = string(in.String())
 		case "skuname":
 			out.Skuname = string(in.String())
+		case "skuguid":
+			out.Skuguid = string(in.String())
 		case "requiredKM":
 			out.RequiredKM = bool(in.Bool())
 		case "qty":
@@ -948,6 +954,7 @@ func easyjson6a975c40Decode6(in *jlexer.Lexer, out *struct {
 func easyjson6a975c40Encode6(out *jwriter.Writer, in struct {
 	Skubarcode string `json:"skubarcode,omitempty"`
 	Skuname    string `json:"skuname,omitempty"`
+	Skuguid    string `json:"skuguid,omitempty"`
 	RequiredKM bool   `json:"requiredKM,omitempty"`
 	Qty        int    `json:"qty,omitempty"`
 	Deviation  bool   `json:"deviation,omitempty"`
@@ -970,6 +977,16 @@ func easyjson6a975c40Encode6(out *jwriter.Writer, in struct {
 			out.RawString(prefix)
 		}
 		out.String(string(in.Skuname))
+	}
+	if in.Skuguid != "" {
+		const prefix string = ",\"skuguid\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.Skuguid))
 	}
 	if in.RequiredKM {
 		const prefix string = ",\"requiredKM\":"
