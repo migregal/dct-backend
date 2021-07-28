@@ -7,7 +7,6 @@ import (
 	"github.com/kardianos/service"
 	"github.com/sirupsen/logrus"
 	"os"
-	"strconv"
 )
 
 const usage = "Usage: dct_backend install | remove | start | stop | restart | status"
@@ -65,18 +64,28 @@ func Manage(s service.Service) (string, error) {
 		command := os.Args[1]
 		switch command {
 		case "install":
-			return "installation", s.Install()
+			return "installed", s.Install()
 		case "remove":
-			return "uninstallation", s.Uninstall()
+			return "removed", s.Uninstall()
 		case "start":
-			return "start", s.Start()
+			return "started", s.Start()
 		case "stop":
-			return "stop", s.Stop()
+			return "stopped", s.Stop()
 		case "restart":
-			return "restart", s.Restart()
+			return "restarted", s.Restart()
 		case "status":
 			status, err := s.Status()
-			return strconv.Itoa(int(status)), err
+			if err != nil {
+				return "error", err
+			}
+			switch status {
+			case service.StatusRunning:
+				return "Status: running", nil
+			case service.StatusStopped:
+				return "Status: stopped", nil
+			default:
+				return "Status: unknown", nil
+			}
 		case "usage":
 			return usage, nil
 		}
