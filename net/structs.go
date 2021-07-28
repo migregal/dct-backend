@@ -70,6 +70,7 @@ type Data struct {
 	Tasklist []struct {
 		Taskname string `json:"taskname,omitempty"`
 		Taskguid string `json:"taskguid,omitempty"`
+		Taskcode string `json:"taskcode,omitempty"`
 	} `json:"tasklist,omitempty"`
 	Caselist []struct {
 		Caseid    string `json:"caseid,omitempty"`

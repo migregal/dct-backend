@@ -636,11 +636,13 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 						out.Tasklist = make([]struct {
 							Taskname string `json:"taskname,omitempty"`
 							Taskguid string `json:"taskguid,omitempty"`
-						}, 0, 2)
+							Taskcode string `json:"taskcode,omitempty"`
+						}, 0, 1)
 					} else {
 						out.Tasklist = []struct {
 							Taskname string `json:"taskname,omitempty"`
 							Taskguid string `json:"taskguid,omitempty"`
+							Taskcode string `json:"taskcode,omitempty"`
 						}{}
 					}
 				} else {
@@ -650,6 +652,7 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 					var v2 struct {
 						Taskname string `json:"taskname,omitempty"`
 						Taskguid string `json:"taskguid,omitempty"`
+						Taskcode string `json:"taskcode,omitempty"`
 					}
 					easyjson6a975c40Decode3(in, &v2)
 					out.Tasklist = append(out.Tasklist, v2)
@@ -1181,6 +1184,7 @@ func easyjson6a975c40Encode4(out *jwriter.Writer, in struct {
 func easyjson6a975c40Decode3(in *jlexer.Lexer, out *struct {
 	Taskname string `json:"taskname,omitempty"`
 	Taskguid string `json:"taskguid,omitempty"`
+	Taskcode string `json:"taskcode,omitempty"`
 }) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
@@ -1204,6 +1208,8 @@ func easyjson6a975c40Decode3(in *jlexer.Lexer, out *struct {
 			out.Taskname = string(in.String())
 		case "taskguid":
 			out.Taskguid = string(in.String())
+		case "taskcode":
+			out.Taskcode = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -1217,6 +1223,7 @@ func easyjson6a975c40Decode3(in *jlexer.Lexer, out *struct {
 func easyjson6a975c40Encode3(out *jwriter.Writer, in struct {
 	Taskname string `json:"taskname,omitempty"`
 	Taskguid string `json:"taskguid,omitempty"`
+	Taskcode string `json:"taskcode,omitempty"`
 }) {
 	out.RawByte('{')
 	first := true
@@ -1236,6 +1243,16 @@ func easyjson6a975c40Encode3(out *jwriter.Writer, in struct {
 			out.RawString(prefix)
 		}
 		out.String(string(in.Taskguid))
+	}
+	if in.Taskcode != "" {
+		const prefix string = ",\"taskcode\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.Taskcode))
 	}
 	out.RawByte('}')
 }
