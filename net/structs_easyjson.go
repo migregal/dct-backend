@@ -761,6 +761,16 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 				}
 				in.Delim(']')
 			}
+		case "skuguid":
+			if in.IsNull() {
+				in.Skip()
+				out.Skuguid = nil
+			} else {
+				if out.Skuguid == nil {
+					out.Skuguid = new(string)
+				}
+				*out.Skuguid = string(in.String())
+			}
 		default:
 			in.SkipRecursive()
 		}
@@ -876,6 +886,16 @@ func easyjson6a975c40EncodeFinnflareComDctBackendNet6(out *jwriter.Writer, in Da
 			}
 			out.RawByte(']')
 		}
+	}
+	if in.Skuguid != nil {
+		const prefix string = ",\"skuguid\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(*in.Skuguid))
 	}
 	out.RawByte('}')
 }
@@ -1513,6 +1533,16 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet7(in *jlexer.Lexer, out *Bod
 				}
 				*out.Barcode = string(in.String())
 			}
+		case "skubarcode":
+			if in.IsNull() {
+				in.Skip()
+				out.SkuBarcode = nil
+			} else {
+				if out.SkuBarcode == nil {
+					out.SkuBarcode = new(string)
+				}
+				*out.SkuBarcode = string(in.String())
+			}
 		case "user":
 			if in.IsNull() {
 				in.Skip()
@@ -1638,6 +1668,16 @@ func easyjson6a975c40EncodeFinnflareComDctBackendNet7(out *jwriter.Writer, in Bo
 		first = false
 		out.RawString(prefix[1:])
 		out.String(string(*in.Barcode))
+	}
+	if in.SkuBarcode != nil {
+		const prefix string = ",\"skubarcode\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(*in.SkuBarcode))
 	}
 	if in.User != nil {
 		const prefix string = ",\"user\":"

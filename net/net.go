@@ -19,6 +19,7 @@ const (
 	caseNotFound    = "TSDExchange.set.casenotfound"
 	taskStopped     = "TSDExchange.set.taskstoped"
 	skuCaseList     = "TSDExchange.get.skucaselist"
+	skuGuid         = "TSDExchange.get.skuguid"
 	skuCaseMove     = "TSDExchange.set.skucasemove"
 	skuCaseNotfound = "TSDExchange.set.skucasenotfound"
 )

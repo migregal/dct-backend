@@ -75,6 +75,8 @@ func (h *Handler) processRequest(request []byte) []byte {
 		fallthrough
 	case skuCaseList:
 		fallthrough
+	case skuGuid:
+		fallthrough
 	case skuCaseMove:
 		fallthrough
 	case skuCaseNotfound:

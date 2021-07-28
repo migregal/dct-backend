@@ -13,8 +13,9 @@ type RequestHeader struct {
 
 //easyjson:json
 type Body struct {
-	Barcode *string `json:"barcode,omitempty"`
-	User    *struct {
+	Barcode    *string `json:"barcode,omitempty"`
+	SkuBarcode *string `json:"skubarcode,omitempty"`
+	User       *struct {
 		Guid *string `json:"guid,omitempty"`
 	} `json:"user,omitempty"`
 	OperationCode *string `json:"operationcode,omitempty"`
@@ -92,6 +93,7 @@ type Data struct {
 		Qty        int    `json:"qty,omitempty"`
 		Deviation  bool   `json:"deviation,omitempty"`
 	} `json:"skucaselist,omitempty"`
+	Skuguid *string `json:"skuguid,omitempty"`
 }
 
 //easyjson:json
