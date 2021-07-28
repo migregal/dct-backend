@@ -109,7 +109,7 @@ func NewServer(cfg config.Config, logger *logrus.Logger) Server {
 		fasthttp.Server{
 			Logger:      logger,
 			Handler:     withCors.CorsMiddleware(rootHandler.ServeHTTP),
-			ReadTimeout: 10 * time.Second,
+			ReadTimeout: 5 * time.Second,
 		},
 	}
 }
