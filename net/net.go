@@ -103,7 +103,7 @@ func NewServer(cfg config.Config, logger *logrus.Logger) Server {
 	withCors := fasthttpcors.NewCorsHandler(fasthttpcors.Options{
 		AllowedMethods:   []string{"GET", "POST"}, // only allow get or post to resource
 		AllowCredentials: false,                   // resource doesn't support credentials
-		AllowMaxAge:      5600,                    // cache the preflight result
+		AllowMaxAge:      int(10 * time.Second),   // cache the preflight result
 	})
 	return Server{
 		fasthttp.Server{
