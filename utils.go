@@ -62,5 +62,7 @@ func displayHelp() {
 		return
 	}
 
+	fmt.Println(serviceName)
+	fmt.Println(usage)
 	fmt.Println(str)
 }
