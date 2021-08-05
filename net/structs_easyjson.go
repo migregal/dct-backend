@@ -771,6 +771,16 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 				}
 				*out.Skuguid = string(in.String())
 			}
+		case "all":
+			if in.IsNull() {
+				in.Skip()
+				out.All = nil
+			} else {
+				if out.All == nil {
+					out.All = new(bool)
+				}
+				*out.All = bool(in.Bool())
+			}
 		default:
 			in.SkipRecursive()
 		}
@@ -896,6 +906,16 @@ func easyjson6a975c40EncodeFinnflareComDctBackendNet6(out *jwriter.Writer, in Da
 			out.RawString(prefix)
 		}
 		out.String(string(*in.Skuguid))
+	}
+	if in.All != nil {
+		const prefix string = ",\"all\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(*in.All))
 	}
 	out.RawByte('}')
 }

@@ -94,6 +94,7 @@ type Data struct {
 		Deviation  bool   `json:"deviation,omitempty"`
 	} `json:"skucaselist,omitempty"`
 	Skuguid *string `json:"skuguid,omitempty"`
+	All     *bool   `json:"all,omitempty"`
 }
 
 //easyjson:json
