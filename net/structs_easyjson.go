@@ -781,6 +781,26 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 				}
 				*out.All = bool(in.Bool())
 			}
+		case "locid":
+			if in.IsNull() {
+				in.Skip()
+				out.LocId = nil
+			} else {
+				if out.LocId == nil {
+					out.LocId = new(string)
+				}
+				*out.LocId = string(in.String())
+			}
+		case "locname":
+			if in.IsNull() {
+				in.Skip()
+				out.LocName = nil
+			} else {
+				if out.LocName == nil {
+					out.LocName = new(string)
+				}
+				*out.LocName = string(in.String())
+			}
 		default:
 			in.SkipRecursive()
 		}
@@ -916,6 +936,26 @@ func easyjson6a975c40EncodeFinnflareComDctBackendNet6(out *jwriter.Writer, in Da
 			out.RawString(prefix)
 		}
 		out.Bool(bool(*in.All))
+	}
+	if in.LocId != nil {
+		const prefix string = ",\"locid\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(*in.LocId))
+	}
+	if in.LocName != nil {
+		const prefix string = ",\"locname\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(*in.LocName))
 	}
 	out.RawByte('}')
 }
@@ -1669,6 +1709,30 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet7(in *jlexer.Lexer, out *Bod
 				}
 				easyjson6a975c40Decode14(in, out.Tocase)
 			}
+		case "toloc":
+			if in.IsNull() {
+				in.Skip()
+				out.Toloc = nil
+			} else {
+				if out.Toloc == nil {
+					out.Toloc = new(struct {
+						Tolocid string `json:"tolocid"`
+					})
+				}
+				easyjson6a975c40Decode15(in, out.Toloc)
+			}
+		case "loc":
+			if in.IsNull() {
+				in.Skip()
+				out.Loc = nil
+			} else {
+				if out.Loc == nil {
+					out.Loc = new(struct {
+						LocId string `json:"locid"`
+					})
+				}
+				easyjson6a975c40Decode16(in, out.Loc)
+			}
 		default:
 			in.SkipRecursive()
 		}
@@ -1789,6 +1853,26 @@ func easyjson6a975c40EncodeFinnflareComDctBackendNet7(out *jwriter.Writer, in Bo
 		}
 		easyjson6a975c40Encode14(out, *in.Tocase)
 	}
+	if in.Toloc != nil {
+		const prefix string = ",\"toloc\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		easyjson6a975c40Encode15(out, *in.Toloc)
+	}
+	if in.Loc != nil {
+		const prefix string = ",\"loc\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		easyjson6a975c40Encode16(out, *in.Loc)
+	}
 	out.RawByte('}')
 }
 
@@ -1814,6 +1898,98 @@ func (v *Body) UnmarshalJSON(data []byte) error {
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *Body) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjson6a975c40DecodeFinnflareComDctBackendNet7(l, v)
+}
+func easyjson6a975c40Decode16(in *jlexer.Lexer, out *struct {
+	LocId string `json:"locid"`
+}) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "locid":
+			out.LocId = string(in.String())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjson6a975c40Encode16(out *jwriter.Writer, in struct {
+	LocId string `json:"locid"`
+}) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"locid\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.LocId))
+	}
+	out.RawByte('}')
+}
+func easyjson6a975c40Decode15(in *jlexer.Lexer, out *struct {
+	Tolocid string `json:"tolocid"`
+}) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "tolocid":
+			out.Tolocid = string(in.String())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjson6a975c40Encode15(out *jwriter.Writer, in struct {
+	Tolocid string `json:"tolocid"`
+}) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"tolocid\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.Tolocid))
+	}
+	out.RawByte('}')
 }
 func easyjson6a975c40Decode14(in *jlexer.Lexer, out *struct {
 	Tocaseid string `json:"tocaseid"`

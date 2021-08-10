@@ -80,6 +80,18 @@ func (h *Handler) processRequest(request []byte) []byte {
 	case skuCaseMove:
 		fallthrough
 	case skuCaseNotfound:
+		fallthrough
+	case locForCase:
+		fallthrough
+	case skuCaseDiff:
+		fallthrough
+	case locForLoc:
+		fallthrough
+	case skuDiffMove:
+		fallthrough
+	case cancelDefragmentation:
+		fallthrough
+	case endDefragmentation:
 		body, err := h.redirectRequest(reqStr)
 
 		if err != nil {

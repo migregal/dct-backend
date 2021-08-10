@@ -40,6 +40,12 @@ type Body struct {
 	Tocase *struct {
 		Tocaseid string `json:"tocaseid"`
 	} `json:"tocase,omitempty"`
+	Toloc *struct {
+		Tolocid string `json:"tolocid"`
+	} `json:"toloc,omitempty"`
+	Loc *struct {
+		LocId string `json:"locid"`
+	} `json:"loc,omitempty"`
 }
 
 //easyjson:json
@@ -95,6 +101,8 @@ type Data struct {
 	} `json:"skucaselist,omitempty"`
 	Skuguid *string `json:"skuguid,omitempty"`
 	All     *bool   `json:"all,omitempty"`
+	LocId   *string `json:"locid,omitempty"`
+	LocName *string `json:"locname,omitempty"`
 }
 
 //easyjson:json

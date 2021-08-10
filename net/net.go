@@ -11,17 +11,23 @@ import (
 )
 
 const (
-	login           = "TSDExchange.login"
-	operations      = "TSDExchange.get.operations"
-	tasks           = "TSDExchange.get.tasklist"
-	cases           = "TSDExchange.get.caselist"
-	addCase         = "TSDExchange.set.newcase"
-	caseNotFound    = "TSDExchange.set.casenotfound"
-	taskStopped     = "TSDExchange.set.taskstoped"
-	skuCaseList     = "TSDExchange.get.skucaselist"
-	skuGuid         = "TSDExchange.get.skuguid"
-	skuCaseMove     = "TSDExchange.set.skucasemove"
-	skuCaseNotfound = "TSDExchange.set.skucasenotfound"
+	login                 = "TSDExchange.login"
+	operations            = "TSDExchange.get.operations"
+	tasks                 = "TSDExchange.get.tasklist"
+	cases                 = "TSDExchange.get.caselist"
+	addCase               = "TSDExchange.set.newcase"
+	caseNotFound          = "TSDExchange.set.casenotfound"
+	taskStopped           = "TSDExchange.set.taskstoped"
+	skuCaseList           = "TSDExchange.get.skucaselist"
+	skuGuid               = "TSDExchange.get.skuguid"
+	skuCaseMove           = "TSDExchange.set.skucasemove"
+	skuCaseNotfound       = "TSDExchange.set.skucasenotfound"
+	locForCase            = "TSDExchange.get.locforcaseid"
+	skuCaseDiff           = "TSDExchange.get.skulistfromcasediff"
+	locForLoc             = "TSDExchange.get.locforlocid"
+	skuDiffMove           = "TSDExchange.set.skudiffmove"
+	cancelDefragmentation = "TSDExchange.set.canсeldiffforcaseid"
+	endDefragmentation    = "TSDExchange.set.enddiffforcaseid"
 )
 
 var (
