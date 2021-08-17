@@ -801,6 +801,16 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 				}
 				*out.LocName = string(in.String())
 			}
+		case "caseended":
+			if in.IsNull() {
+				in.Skip()
+				out.CaseEnded = nil
+			} else {
+				if out.CaseEnded == nil {
+					out.CaseEnded = new(bool)
+				}
+				*out.CaseEnded = bool(in.Bool())
+			}
 		default:
 			in.SkipRecursive()
 		}
@@ -956,6 +966,16 @@ func easyjson6a975c40EncodeFinnflareComDctBackendNet6(out *jwriter.Writer, in Da
 			out.RawString(prefix)
 		}
 		out.String(string(*in.LocName))
+	}
+	if in.CaseEnded != nil {
+		const prefix string = ",\"caseended\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(*in.CaseEnded))
 	}
 	out.RawByte('}')
 }

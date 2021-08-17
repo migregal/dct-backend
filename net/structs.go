@@ -99,10 +99,11 @@ type Data struct {
 		Qty        int    `json:"qty,omitempty"`
 		Deviation  bool   `json:"deviation,omitempty"`
 	} `json:"skucaselist,omitempty"`
-	Skuguid *string `json:"skuguid,omitempty"`
-	All     *bool   `json:"all,omitempty"`
-	LocId   *string `json:"locid,omitempty"`
-	LocName *string `json:"locname,omitempty"`
+	Skuguid   *string `json:"skuguid,omitempty"`
+	All       *bool   `json:"all,omitempty"`
+	LocId     *string `json:"locid,omitempty"`
+	LocName   *string `json:"locname,omitempty"`
+	CaseEnded *bool   `json:"caseended,omitempty"`
 }
 
 //easyjson:json
