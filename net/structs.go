@@ -85,7 +85,7 @@ type Data struct {
 		Casename  string `json:"casename,omitempty"`
 		Locid     string `json:"locid,omitempty"`
 		Loc       string `json:"loc,omitempty"`
-		Qty       int    `json:"qty,omitempty"`
+		Qty       string `json:"qty,omitempty"`
 		Deviation bool   `json:"deviation,omitempty"`
 	} `json:"caselist,omitempty"`
 	Case *struct {
@@ -97,7 +97,7 @@ type Data struct {
 		Skuname    string `json:"skuname,omitempty"`
 		Skuguid    string `json:"skuguid,omitempty"`
 		RequiredKM bool   `json:"requiredKM,omitempty"`
-		Qty        int    `json:"qty,omitempty"`
+		Qty        string `json:"qty,omitempty"`
 		Deviation  bool   `json:"deviation,omitempty"`
 	} `json:"skucaselist,omitempty"`
 	Skuguid   *string `json:"skuguid,omitempty"`

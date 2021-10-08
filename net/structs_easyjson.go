@@ -674,7 +674,7 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 							Casename  string `json:"casename,omitempty"`
 							Locid     string `json:"locid,omitempty"`
 							Loc       string `json:"loc,omitempty"`
-							Qty       int    `json:"qty,omitempty"`
+							Qty       string `json:"qty,omitempty"`
 							Deviation bool   `json:"deviation,omitempty"`
 						}, 0, 0)
 					} else {
@@ -683,7 +683,7 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 							Casename  string `json:"casename,omitempty"`
 							Locid     string `json:"locid,omitempty"`
 							Loc       string `json:"loc,omitempty"`
-							Qty       int    `json:"qty,omitempty"`
+							Qty       string `json:"qty,omitempty"`
 							Deviation bool   `json:"deviation,omitempty"`
 						}{}
 					}
@@ -696,7 +696,7 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 						Casename  string `json:"casename,omitempty"`
 						Locid     string `json:"locid,omitempty"`
 						Loc       string `json:"loc,omitempty"`
-						Qty       int    `json:"qty,omitempty"`
+						Qty       string `json:"qty,omitempty"`
 						Deviation bool   `json:"deviation,omitempty"`
 					}
 					easyjson6a975c40Decode4(in, &v3)
@@ -731,7 +731,7 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 							Skuname    string `json:"skuname,omitempty"`
 							Skuguid    string `json:"skuguid,omitempty"`
 							RequiredKM bool   `json:"requiredKM,omitempty"`
-							Qty        int    `json:"qty,omitempty"`
+							Qty        string `json:"qty,omitempty"`
 							Deviation  bool   `json:"deviation,omitempty"`
 						}, 0, 0)
 					} else {
@@ -740,7 +740,7 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 							Skuname    string `json:"skuname,omitempty"`
 							Skuguid    string `json:"skuguid,omitempty"`
 							RequiredKM bool   `json:"requiredKM,omitempty"`
-							Qty        int    `json:"qty,omitempty"`
+							Qty        string `json:"qty,omitempty"`
 							Deviation  bool   `json:"deviation,omitempty"`
 						}{}
 					}
@@ -753,7 +753,7 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 						Skuname    string `json:"skuname,omitempty"`
 						Skuguid    string `json:"skuguid,omitempty"`
 						RequiredKM bool   `json:"requiredKM,omitempty"`
-						Qty        int    `json:"qty,omitempty"`
+						Qty        string `json:"qty,omitempty"`
 						Deviation  bool   `json:"deviation,omitempty"`
 					}
 					easyjson6a975c40Decode6(in, &v4)
@@ -1009,7 +1009,7 @@ func easyjson6a975c40Decode6(in *jlexer.Lexer, out *struct {
 	Skuname    string `json:"skuname,omitempty"`
 	Skuguid    string `json:"skuguid,omitempty"`
 	RequiredKM bool   `json:"requiredKM,omitempty"`
-	Qty        int    `json:"qty,omitempty"`
+	Qty        string `json:"qty,omitempty"`
 	Deviation  bool   `json:"deviation,omitempty"`
 }) {
 	isTopLevel := in.IsStart()
@@ -1039,7 +1039,7 @@ func easyjson6a975c40Decode6(in *jlexer.Lexer, out *struct {
 		case "requiredKM":
 			out.RequiredKM = bool(in.Bool())
 		case "qty":
-			out.Qty = int(in.Int())
+			out.Qty = string(in.String())
 		case "deviation":
 			out.Deviation = bool(in.Bool())
 		default:
@@ -1057,7 +1057,7 @@ func easyjson6a975c40Encode6(out *jwriter.Writer, in struct {
 	Skuname    string `json:"skuname,omitempty"`
 	Skuguid    string `json:"skuguid,omitempty"`
 	RequiredKM bool   `json:"requiredKM,omitempty"`
-	Qty        int    `json:"qty,omitempty"`
+	Qty        string `json:"qty,omitempty"`
 	Deviation  bool   `json:"deviation,omitempty"`
 }) {
 	out.RawByte('{')
@@ -1099,7 +1099,7 @@ func easyjson6a975c40Encode6(out *jwriter.Writer, in struct {
 		}
 		out.Bool(bool(in.RequiredKM))
 	}
-	if in.Qty != 0 {
+	if in.Qty != "" {
 		const prefix string = ",\"qty\":"
 		if first {
 			first = false
@@ -1107,7 +1107,7 @@ func easyjson6a975c40Encode6(out *jwriter.Writer, in struct {
 		} else {
 			out.RawString(prefix)
 		}
-		out.Int(int(in.Qty))
+		out.String(string(in.Qty))
 	}
 	if in.Deviation {
 		const prefix string = ",\"deviation\":"
@@ -1187,7 +1187,7 @@ func easyjson6a975c40Decode4(in *jlexer.Lexer, out *struct {
 	Casename  string `json:"casename,omitempty"`
 	Locid     string `json:"locid,omitempty"`
 	Loc       string `json:"loc,omitempty"`
-	Qty       int    `json:"qty,omitempty"`
+	Qty       string `json:"qty,omitempty"`
 	Deviation bool   `json:"deviation,omitempty"`
 }) {
 	isTopLevel := in.IsStart()
@@ -1217,7 +1217,7 @@ func easyjson6a975c40Decode4(in *jlexer.Lexer, out *struct {
 		case "loc":
 			out.Loc = string(in.String())
 		case "qty":
-			out.Qty = int(in.Int())
+			out.Qty = string(in.String())
 		case "deviation":
 			out.Deviation = bool(in.Bool())
 		default:
@@ -1235,7 +1235,7 @@ func easyjson6a975c40Encode4(out *jwriter.Writer, in struct {
 	Casename  string `json:"casename,omitempty"`
 	Locid     string `json:"locid,omitempty"`
 	Loc       string `json:"loc,omitempty"`
-	Qty       int    `json:"qty,omitempty"`
+	Qty       string `json:"qty,omitempty"`
 	Deviation bool   `json:"deviation,omitempty"`
 }) {
 	out.RawByte('{')
@@ -1277,7 +1277,7 @@ func easyjson6a975c40Encode4(out *jwriter.Writer, in struct {
 		}
 		out.String(string(in.Loc))
 	}
-	if in.Qty != 0 {
+	if in.Qty != "" {
 		const prefix string = ",\"qty\":"
 		if first {
 			first = false
@@ -1285,7 +1285,7 @@ func easyjson6a975c40Encode4(out *jwriter.Writer, in struct {
 		} else {
 			out.RawString(prefix)
 		}
-		out.Int(int(in.Qty))
+		out.String(string(in.Qty))
 	}
 	if in.Deviation {
 		const prefix string = ",\"deviation\":"
