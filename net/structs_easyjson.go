@@ -621,6 +621,7 @@ func easyjson6a975c40DecodeFinnflareComDctBackendNet6(in *jlexer.Lexer, out *Dat
 						Taskguid string `json:"taskguid,omitempty"`
 						Totalqty string `json:"totalqty,omitempty"`
 						Execqty  string `json:"execqty,omitempty"`
+						Keeploc  bool   `json:"keeploc,omitempty"`
 					})
 				}
 				easyjson6a975c40Decode2(in, out.Task)
@@ -1378,6 +1379,7 @@ func easyjson6a975c40Decode2(in *jlexer.Lexer, out *struct {
 	Taskguid string `json:"taskguid,omitempty"`
 	Totalqty string `json:"totalqty,omitempty"`
 	Execqty  string `json:"execqty,omitempty"`
+	Keeploc  bool   `json:"keeploc,omitempty"`
 }) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
@@ -1405,6 +1407,8 @@ func easyjson6a975c40Decode2(in *jlexer.Lexer, out *struct {
 			out.Totalqty = string(in.String())
 		case "execqty":
 			out.Execqty = string(in.String())
+		case "keeploc":
+			out.Keeploc = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -1420,6 +1424,7 @@ func easyjson6a975c40Encode2(out *jwriter.Writer, in struct {
 	Taskguid string `json:"taskguid,omitempty"`
 	Totalqty string `json:"totalqty,omitempty"`
 	Execqty  string `json:"execqty,omitempty"`
+	Keeploc  bool   `json:"keeploc,omitempty"`
 }) {
 	out.RawByte('{')
 	first := true
@@ -1459,6 +1464,16 @@ func easyjson6a975c40Encode2(out *jwriter.Writer, in struct {
 			out.RawString(prefix)
 		}
 		out.String(string(in.Execqty))
+	}
+	if in.Keeploc {
+		const prefix string = ",\"keeploc\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.Keeploc))
 	}
 	out.RawByte('}')
 }

@@ -73,6 +73,7 @@ type Data struct {
 		Taskguid string `json:"taskguid,omitempty"`
 		Totalqty string `json:"totalqty,omitempty"`
 		Execqty  string `json:"execqty,omitempty"`
+		Keeploc  bool   `json:"keeploc,omitempty"`
 	} `json:"task,omitempty"`
 	Tasklist []struct {
 		Taskname string `json:"taskname,omitempty"`

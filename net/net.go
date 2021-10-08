@@ -2,12 +2,13 @@ package net
 
 import (
 	"encoding/base64"
+	"os"
+	"time"
+
 	"finnflare.com/dct_backend/config"
 	"github.com/AdhityaRamadhanus/fasthttpcors"
 	"github.com/sirupsen/logrus"
 	"github.com/valyala/fasthttp"
-	"os"
-	"time"
 )
 
 const (
@@ -28,6 +29,8 @@ const (
 	skuDiffMove           = "TSDExchange.set.skudiffmove"
 	cancelDefragmentation = "TSDExchange.set.canсeldiffforcaseid"
 	endDefragmentation    = "TSDExchange.set.enddiffforcaseid"
+	taskMove              = "TSDExchange.set.skutaskmove"
+	cancellallMoveForTask = "TSDExchange.set.canсelallmovefortask"
 )
 
 var (
