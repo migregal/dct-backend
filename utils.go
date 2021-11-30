@@ -1,15 +1,22 @@
 package main
 
 import (
-	"errors"
 	"finnflare.com/dct_backend/config"
 	"finnflare.com/dct_backend/logger"
 	"flag"
 	"fmt"
 	"github.com/sirupsen/logrus"
+	"os"
+	"path/filepath"
 )
 
 func setUp() (*config.Config, *logrus.Logger, error) {
+	ex, err := os.Executable()
+	if err != nil {
+		panic(err)
+	}
+	exPath := filepath.Dir(ex)
+
 	help, verbose, confFile := parseFlags()
 
 	if *help {
@@ -17,15 +24,12 @@ func setUp() (*config.Config, *logrus.Logger, error) {
 		return nil, nil, nil
 	}
 
-	if *confFile == "" {
-		flag.PrintDefaults()
-		return nil, nil, errors.New("missing configuration file name")
-	}
-
 	var cfg config.Config
-	if err := cfg.GetConfig(*confFile, true); err != nil {
+	if err := cfg.GetConfig(exPath+string(os.PathSeparator)+*confFile, true); err != nil {
 		return nil, nil, err
 	}
+	cfg.CurPass = exPath
+	cfg.Daemon.LogPath = cfg.CurPass + string(os.PathSeparator) + cfg.Daemon.LogPath
 
 	log, err := logger.ConfigureLogger(cfg.Daemon.LogPath)
 
@@ -43,7 +47,7 @@ func setUp() (*config.Config, *logrus.Logger, error) {
 func parseFlags() (*bool, *bool, *string) {
 	help := flag.Bool("h", false, "Display config description")
 	verbose := flag.Bool("v", false, "Display config result")
-	confFile := flag.String("config", "", "Config file name")
+	confFile := flag.String("config", "config.json", "Config file name")
 	flag.Parse()
 
 	return help, verbose, confFile
@@ -58,5 +62,7 @@ func displayHelp() {
 		return
 	}
 
+	fmt.Println(serviceName)
+	fmt.Println(usage)
 	fmt.Println(str)
 }

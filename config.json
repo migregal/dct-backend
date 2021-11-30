@@ -1,0 +1,14 @@
+{
+  "daemon": {
+    "log_path": "./logs/",
+    "port": "8081",
+    "token": "6A03D071BDDD6D4ACFAB30E6D4DD1DAE4CDE39F3",
+    "redirect": "https://api.finnflare.com:48054",
+    "access_token": "85037371-70df-41bc-834a-41d40c08a3a0",
+    "workers_pul_size": 64
+  },
+  "auth": {
+    "login": "WMS",
+    "pwd": ""
+  }
+}
